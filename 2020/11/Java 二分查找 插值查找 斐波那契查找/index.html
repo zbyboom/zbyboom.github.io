@@ -1,0 +1,541 @@
+
+
+<!DOCTYPE html>
+<html lang="en" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" type="image/png" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  <title>Java 二分查找 插值查找 斐波那契查找 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/github-markdown-css/4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.staticfile.org/highlight.js/10.0.0/styles/github-gist.min.css" />
+    
+  
+
+  
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>小白羊的小世界</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                Home
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                Archives
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                Categories
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                Tags
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                About
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" href="javascript:">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner intro-2" id="background" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="container page-header text-center fade-in-up">
+            <span class="h2" id="subtitle">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2020-11-02 09:40" pubdate>
+        November 2, 2020 am
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      952 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      12
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="container nopadding-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto" id="post">
+            <!-- SEO header -->
+            <h1 style="display: none">Java 二分查找 插值查找 斐波那契查找</h1>
+            
+            <div class="markdown-body" id="post-body">
+              <p>常用的查询算法：</p>
+<ol>
+<li>顺序查找</li>
+<li>二分查找</li>
+<li>插值查找</li>
+<li>斐波那契查找</li>
+<li>树表查找</li>
+<li>分块查找</li>
+<li>哈希查找</li>
+<li>索引查询</li>
+<li>深度搜索&amp;&amp;广度搜索<h1 id="一、-二分查找"><a href="#一、-二分查找" class="headerlink" title="一、 二分查找"></a>一、 二分查找</h1>条件：数组必须是有序的<br>优点：比较次数少;查找速度快;平均性能好<br>缺点：待查表为有序数组（若为无序数组，分成两份查找无意义，排序本身也耗费时间）;插入删除困难（增删需要移动大量的节点）<br>时间复杂度为O(lgN);<h2 id="（一）基本方法"><a href="#（一）基本方法" class="headerlink" title="（一）基本方法"></a>（一）基本方法</h2><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">binarySearch</span><span class="hljs-params">(<span class="hljs-keyword">int</span>[] nums, <span class="hljs-keyword">int</span> target)</span> </span>&#123;
+    <span class="hljs-keyword">int</span> left = <span class="hljs-number">0</span>; 
+    <span class="hljs-keyword">int</span> right = nums.length - <span class="hljs-number">1</span>; <span class="hljs-comment">// 注意</span>
+
+    <span class="hljs-keyword">while</span>(left &lt;= right) &#123; <span class="hljs-comment">// 注意</span>
+        <span class="hljs-keyword">int</span> mid = left+(right - left) / <span class="hljs-number">2</span>;
+        <span class="hljs-keyword">if</span>(nums[mid] == target)
+            <span class="hljs-keyword">return</span> mid; 
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &lt; target)
+            left = mid + <span class="hljs-number">1</span>; <span class="hljs-comment">// 注意</span>
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (nums[mid] &gt; target)
+            right = mid - <span class="hljs-number">1</span>; <span class="hljs-comment">// 注意</span>
+        &#125;
+    <span class="hljs-keyword">return</span> -<span class="hljs-number">1</span>;
+&#125;</code></pre>
+
+</li>
+</ol>
+<p>代码的注意点：<br>1.停止的条件为:left&lt;=right。如果left&lt;right的话，当left和right相等的值是检查不到的。<br>2.left=mid+1;right=mid-1。因为mid已经检查过了，所以可以剔除掉。<br>3.left+(right - left) / 2。不用（left+right）/2是为了防止溢出。<br>3.局限性：对于有序数组 nums = [1,2,2,2,3]，target = 2，此算法返回的索引是 2，没错。但是如果我想得到 target 的左侧边界，即索引 1，或者我想得到 target 的右侧边界，即索引 3，这样的话此算法是无法处理的。</p>
+<h2 id="（二）查找左边界的目标"><a href="#（二）查找左边界的目标" class="headerlink" title="（二）查找左边界的目标"></a>（二）查找左边界的目标</h2><pre><code class="hljs excel"><span class="hljs-built_in">int</span> left_bound(<span class="hljs-built_in">int</span>[] nums, <span class="hljs-built_in">int</span> target) &#123;
+    <span class="hljs-built_in">if</span> (nums.length == <span class="hljs-number">0</span>) return -<span class="hljs-number">1</span>;
+    <span class="hljs-built_in">int</span> <span class="hljs-built_in">left</span> = <span class="hljs-number">0</span>;
+    <span class="hljs-built_in">int</span> <span class="hljs-built_in">right</span> = nums.length; // 注意
+
+    while (<span class="hljs-built_in">left</span> &lt; <span class="hljs-built_in">right</span>) &#123; // 注意
+        <span class="hljs-built_in">int</span> <span class="hljs-built_in">mid</span> = <span class="hljs-built_in">left</span>+(<span class="hljs-built_in">right</span>-<span class="hljs-built_in">left</span>) / <span class="hljs-number">2</span>;
+        <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] == target) &#123;
+            <span class="hljs-built_in">right</span> = <span class="hljs-built_in">mid</span>;
+        &#125; else <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] &lt; target) &#123;
+            <span class="hljs-built_in">left</span> = <span class="hljs-built_in">mid</span> + <span class="hljs-number">1</span>;
+        &#125; else <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] &gt; target) &#123;
+            <span class="hljs-built_in">right</span> = <span class="hljs-built_in">mid</span>; // 注意
+        &#125;
+    &#125;
+    <span class="hljs-built_in">if</span> (<span class="hljs-built_in">left</span> == nums.length) return -<span class="hljs-number">1</span>;
+	// 类似之前算法的处理方式
+	return nums[<span class="hljs-built_in">left</span>] == target ? <span class="hljs-built_in">left</span> <span class="hljs-symbol">:</span> -<span class="hljs-number">1</span>;
+&#125;</code></pre>
+
+<p>修改的地方：<br>1.并不是nums[mid] == target时直接返回，而是将right值赋给它，因为我们要找最右侧的这个点。因此这个操作相当于是，将范围定位在这个值的左侧范围内。<br>2. int right = nums.length。相当于在这个值的右侧加了一个点 ，但是这个点是不能取到的。同样的，right=mid，但是mid点是不用取的，所以我们相当于是[left, right)范围内搜索的。因此，left &lt; right的结束条件是left=right，此时搜索范围为空。</p>
+<h2 id="（三）查找右边界的目标"><a href="#（三）查找右边界的目标" class="headerlink" title="（三）查找右边界的目标"></a>（三）查找右边界的目标</h2><pre><code class="hljs excel"><span class="hljs-built_in">int</span> right_bound(<span class="hljs-built_in">int</span>[] nums, <span class="hljs-built_in">int</span> target) &#123;
+    <span class="hljs-built_in">if</span> (nums.length == <span class="hljs-number">0</span>) return -<span class="hljs-number">1</span>;
+    <span class="hljs-built_in">int</span> <span class="hljs-built_in">left</span> = <span class="hljs-number">0</span>, <span class="hljs-built_in">right</span> = nums.length;
+
+    while (<span class="hljs-built_in">left</span> &lt; <span class="hljs-built_in">right</span>) &#123;
+        <span class="hljs-built_in">int</span> <span class="hljs-built_in">mid</span> = (<span class="hljs-built_in">left</span> + <span class="hljs-built_in">right</span>) / <span class="hljs-number">2</span>;
+        <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] == target) &#123;
+            <span class="hljs-built_in">left</span> = <span class="hljs-built_in">mid</span> + <span class="hljs-number">1</span>; // 注意
+        &#125; else <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] &lt; target) &#123;
+            <span class="hljs-built_in">left</span> = <span class="hljs-built_in">mid</span> + <span class="hljs-number">1</span>;
+        &#125; else <span class="hljs-built_in">if</span> (nums[<span class="hljs-built_in">mid</span>] &gt; target) &#123;
+            <span class="hljs-built_in">right</span> = <span class="hljs-built_in">mid</span>;
+        &#125;
+    &#125;
+    <span class="hljs-built_in">if</span> (<span class="hljs-built_in">left</span> == <span class="hljs-number">0</span>) return -<span class="hljs-number">1</span>;
+	return nums[<span class="hljs-built_in">left</span>-<span class="hljs-number">1</span>] == target ? (<span class="hljs-built_in">right</span>-<span class="hljs-number">1</span>) <span class="hljs-symbol">:</span> -<span class="hljs-number">1</span>;</code></pre>
+
+<p>修改的地方：<br>1.当 nums[mid] == target 时，不要立即返回，而是增大「搜索区间」的下界 left，使得区间不断向右收缩，达到锁定右侧边界的目的。</p>
+<h1 id="二、插值查找"><a href="#二、插值查找" class="headerlink" title="二、插值查找"></a>二、插值查找</h1><p>二分查找选取中间位置，插值查找则通过查找值判定大概位于序列的哪个位置比例。</p>
+<p>插入查找：选择下标 mid= left + (right - left) * (key - arr[left])/(arr[right] - arr[left])</p>
+<p>（1）序列为有序序列</p>
+<p>（2）根据公式选取比较值，相等返回下标，不相等则根据公式继续查找，未找到返回-1</p>
+<p>用插值寻找时，需要这个有序序列中的数字大小排序整体均匀。例如[1,2,3,4,5]，而非[1,5,6,15,39]。</p>
+<h1 id="三、斐波那契查找"><a href="#三、斐波那契查找" class="headerlink" title="三、斐波那契查找"></a>三、斐波那契查找</h1><p>斐波那契查找同样是不断修改mid值，令mid=low+F(k-1)-1，F(k-1)是斐波那契函数值。<br>计算过程依据的是F(k) = F(k-1) + F(k-2)，初始的两个值是1，1，因此可以递归。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java%E7%9F%A5%E8%AF%86%E7%82%B9%E6%80%BB%E7%BB%93/">Java知识点总结</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/JAVA-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">-JAVA -基础知识</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！</p>
+              
+              
+                <div class="post-prevnext row">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/Java%20%E5%A6%82%E4%BD%95%E7%90%86%E8%A7%A3%E6%B3%9B%E5%9E%8B/">
+                        <span class="hidden-mobile">Java 如何理解泛型</span>
+                        <span class="visible-mobile">Next</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;TOC</p>
+  <div id="tocbot"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+  </main>
+
+  
+    <a id="scroll-top-button" href="#" role="button">
+      <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+    </a>
+  
+
+  
+    <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Search</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">keyword</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+
+  
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+<!-- SCRIPTS -->
+<script  src="https://cdn.staticfile.org/jquery/3.4.1/jquery.min.js" ></script>
+<script  src="https://cdn.staticfile.org/twitter-bootstrap/4.4.1/js/bootstrap.min.js" ></script>
+<script  src="/js/debouncer.js" ></script>
+<script  src="/js/main.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script defer src="https://cdn.staticfile.org/clipboard.js/2.0.6/clipboard.min.js" ></script>
+  <script  src="/js/clipboard-use.js" ></script>
+
+
+
+
+
+
+
+  <script  src="https://cdn.staticfile.org/tocbot/4.11.1/tocbot.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      var boardCtn = $('#board-ctn');
+      var boardTop = boardCtn.offset().top;
+
+      tocbot.init({
+        tocSelector: '#tocbot',
+        contentSelector: '#post-body',
+        headingSelector: 'h1,h2,h3,h4,h5,h6',
+        linkClass: 'tocbot-link',
+        activeLinkClass: 'tocbot-active-link',
+        listClass: 'tocbot-list',
+        isCollapsedClass: 'tocbot-is-collapsed',
+        collapsibleClass: 'tocbot-is-collapsible',
+        collapseDepth: 0,
+        scrollSmooth: true,
+        headingsOffset: -boardTop
+      });
+      if ($('.toc-list-item').length > 0) {
+        $('#toc').css('visibility', 'visible');
+      }
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/typed.js/2.0.11/typed.min.js" ></script>
+  <script>
+    var typed = new Typed('#subtitle', {
+      strings: [
+        '  ',
+        "Java 二分查找 插值查找 斐波那契查找&nbsp;",
+      ],
+      cursorChar: "_",
+      typeSpeed: 70,
+      loop: false,
+    });
+    typed.stop();
+    $(document).ready(function () {
+      $(".typed-cursor").addClass("h2");
+      typed.start();
+    });
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/anchor-js/4.2.2/anchor.min.js" ></script>
+  <script>
+    anchors.options = {
+      placement: "right",
+      visible: "hover",
+      
+    };
+    var el = "h1,h2,h3,h4,h5,h6".split(",");
+    var res = [];
+    for (item of el) {
+      res.push(".markdown-body > " + item)
+    }
+    anchors.add(res.join(", "))
+  </script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+  <script>
+    var path = "/local-search.xml";
+    var inputArea = document.querySelector("#local-search-input");
+    inputArea.onclick = function () {
+      searchFunc(path, 'local-search-input', 'local-search-result');
+      this.onclick = null
+    }
+  </script>
+
+
+
+  <script  src="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.staticfile.org/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <script>
+    $('#post img:not(.no-zoom img, img[no-zoom]), img[zoom]').each(
+      function () {
+        var element = document.createElement('a');
+        $(element).attr('data-fancybox', 'images');
+        $(element).attr('href', $(this).attr('src'));
+        $(this).wrap(element);
+      }
+    );
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
